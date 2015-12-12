@@ -21,7 +21,8 @@
         android:id="@+id/bindService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bind_service"/>
+        android:text="@string/bind_service"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/stopService"
@@ -33,7 +34,8 @@
         android:id="@+id/unBindService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/unbind_service"/>
+        android:text="@string/unbind_service"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/getServiceData"

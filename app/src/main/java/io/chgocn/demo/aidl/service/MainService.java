@@ -14,22 +14,30 @@ import io.chgocn.demo.aidl.IMyAidlInterface;
 public class MainService extends Service{
     public static String TAG = MainService.class.getSimpleName();
 
+    private MainServiceBinder mBinder;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
 
-    IMyAidlInterface.Stub mBinder = new IMyAidlInterface.Stub() {
+    private class MainServiceBinder extends IMyAidlInterface.Stub implements IMainservice{
         @Override
-        public int plus(int a, int b) throws RemoteException {
-            return a+b;
+        public void keepAlive() throws RemoteException {
+
+        }
+
+        @Override
+        public int plus(int a, int b) {
+            return a+ b;
         }
     };
 
     @Override
     public void onCreate() {
         super.onCreate();
+        mBinder = new MainServiceBinder();
         Log.d(TAG, "onCreate() executed");
         Log.d(TAG,"process id is " + android.os.Process.myPid());
     }

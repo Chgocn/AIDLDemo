@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import io.chgocn.demo.aidl.IMyAidlInterface;
 import io.chgocn.demo.aidl.R;
+import io.chgocn.demo.aidl.service.IMainservice;
 import io.chgocn.demo.aidl.service.MainService;
 
 /**
@@ -22,18 +21,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static String TAG = MainActivity.class.getSimpleName();
 
     private int result;
-    private IMyAidlInterface iMyAidlInterface;
+    private IMainservice serviceInstance;
 
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            iMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
-            try {
-                result = iMyAidlInterface.plus(3, 5);
-                Log.d(TAG, "result is " + result);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            serviceInstance = (IMainservice) service;
         }
 
         @Override
@@ -71,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 unbindService(connection);
                 break;
             case R.id.getServiceData:
+                result = serviceInstance.plus(3,5);
                 Toast.makeText(MainActivity.this,"获取的数据源为："+ result,Toast.LENGTH_SHORT).show();
                 break;
         }
