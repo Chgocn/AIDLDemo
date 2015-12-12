@@ -18,8 +18,11 @@ import io.chgocn.demo.aidl.service.MainService;
 /**
  * @author chgocn(chgocn@gmail.com)
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    public static String TAG = MainActivity.class.getSimpleName();
+
     private int result;
+    private IMyAidlInterface iMyAidlInterface;
 
     private ServiceConnection connection = new ServiceConnection() {
         @Override
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             iMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
             try {
                 result = iMyAidlInterface.plus(3, 5);
-                Log.d("TAG", "result is " + result);
+                Log.d(TAG, "result is " + result);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -38,25 +41,38 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-    private IMyAidlInterface iMyAidlInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.bindService).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bindService(new Intent(MainActivity.this, MainService.class), connection, BIND_AUTO_CREATE);
-            }
-        });
+        Log.d(TAG, "process id is " + android.os.Process.myPid());
+        findViewById(R.id.startService).setOnClickListener(this);
+        findViewById(R.id.bindService).setOnClickListener(this);
+        findViewById(R.id.stopService).setOnClickListener(this);
+        findViewById(R.id.unBindService).setOnClickListener(this);
+        findViewById(R.id.getServiceData).setOnClickListener(this);
+    }
 
-        findViewById(R.id.getServiceData).setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View viewClicked) {
+        Intent intent = new Intent(this, MainService.class);
+        switch (viewClicked.getId()){
+            case R.id.startService:
+                startService(intent);
+                break;
+            case R.id.bindService:
+                bindService(intent, connection, BIND_AUTO_CREATE);
+                break;
+            case R.id.stopService:
+                stopService(intent);
+                break;
+            case R.id.unBindService:
+                unbindService(connection);
+                break;
+            case R.id.getServiceData:
                 Toast.makeText(MainActivity.this,"获取的数据源为："+ result,Toast.LENGTH_SHORT).show();
-            }
-        });
+                break;
+        }
     }
 }
