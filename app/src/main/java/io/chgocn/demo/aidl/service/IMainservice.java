@@ -1,8 +1,9 @@
 package io.chgocn.demo.aidl.service;
 
 /**
- * Created by cg
+ * Created by chgocn
  */
 public interface IMainservice {
-    int plus(int a, int b);
+    void fishing();
+    void shopping();
 }

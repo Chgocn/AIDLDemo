@@ -8,7 +8,6 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import io.chgocn.demo.aidl.R;
 import io.chgocn.demo.aidl.service.IMainservice;
@@ -64,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 unbindService(connection);
                 break;
             case R.id.getServiceData:
-                result = serviceInstance.plus(3,5);
-                Toast.makeText(MainActivity.this,"获取的数据源为："+ result,Toast.LENGTH_SHORT).show();
+                //result = serviceInstance.plus(3,5);
+                //Toast.makeText(MainActivity.this,"获取的数据源为："+ result,Toast.LENGTH_SHORT).show();
                 break;
         }
     }
