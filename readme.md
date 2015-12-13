@@ -2,6 +2,12 @@
 It's a demo that help myself to improve  the process of communication comprehension.
 # UML
 ![uml_image](https://raw.githubusercontent.com/Chgocn/AIDLDemo/master/screenshots/uml.png)
+# Story
+One day, father cat would eat fish, so he tells the mother cat, and the mother cat called her two children,she let the old brother cat go fishing, and the little one to buy condiment, when they finish their work must tell her so that she can cook.
+ - father cat: MainActivity
+ - mother cat:MainService
+ - old brother:FishEngine
+ - little brother:ShoppingEngine
 # License
 ---
 
